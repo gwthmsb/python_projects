@@ -1,0 +1,38 @@
+look ahead assertion: (?=...)
+Eg: re.findall("abc(?=def)", "abcdefg") results in "abc" because "def" is just ahead of "abc"
+Eg: re.findall("abc(?=def)", "abcef") results in negative finding
+
+Negative look ahead assertion: (?!...)
+Matches if ... doesn't match the next.
+Eg: re.findall("abc(?!edf)", "abcdefg") results in negative finding
+Eg: re.findall("abc(?!edf)", "abcde") results in "abc"
+
+Positive look behind assertion: (?<=...)
+Matches if reg is behind ...
+Eg: re.findall("(?<=abc)def", "abcdef") results in "def"
+Eg: re.findall("(?<=\w)\w+", "abcdefg acde") results in ["bcdefg, cde"]
+
+Negative look behind assertion: (?<!...)
+Matches if reg is not behind ...
+Eg: re.findall("(?<!a)bcd", "abcd") results in negative finding
+Eg: re.findall("(?<!a)bcd", "bcd") results in "bcd"
+Eg: re.findall("(?<!\d)\w+", "abcd") results in "abcd"
+
+
+
+Substituion through methods:
+
+def changeToAsterisk(obj):
+	if obj.group(0) in ('-','(', '\'', '{'):
+		return '*';
+	else: return '-'
+
+re.sub("-(\,{", changeToAsterisk, "my_project(has ' in {. ", count=2)
+=> my_project*has * in {. 
+
+
+Getting start and end index:
+s = re.search("bc", "aaaaaaabcaaaa bcedfff")
+s.start() => 7
+s.end() => 9
+
